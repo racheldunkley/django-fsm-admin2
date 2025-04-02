@@ -19,7 +19,7 @@ setup(
     description='django-fsm transition integration to django admin.',
     install_requires=[
         'django>=3.0',
-        'django-fsm',
+        'django-fsm-2',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
