@@ -25,6 +25,12 @@ class FSMTransitionMixin:
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         # We need request.user to get available transitions in fsm_display_FIELD method
         self.request = request
+        if not extra_context:
+            extra_context = {}
+        obj = self.model.objects.get(id=object_id)
+        for fsm_field in self.fsm_fields:
+            display_func = getattr(self, _get_display_func_name(fsm_field))
+            extra_context[f'{fsm_field}_buttons'] = display_func(obj)
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def get_readonly_fields(self, request, obj=None):
