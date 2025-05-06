@@ -57,7 +57,7 @@ class FSMTransitionMixin:
             if request.method == 'POST':
                 form = form_class(request.POST)
                 if form.is_valid():
-                    transition_method(**form.cleaned_data)
+                    transition_method(**form.cleaned_data, request=request)
                     obj.save()
                 else:
                     return render(request,
@@ -72,7 +72,7 @@ class FSMTransitionMixin:
                               )
         else:
             try:
-                transition_method()
+                transition_method(request=request)
             except TransitionNotAllowed:
                 self.message_user(request,
                                   _('Transition %(transition)s is not allowed')
