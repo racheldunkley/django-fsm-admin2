@@ -66,6 +66,7 @@ class FSMTransitionMixin:
                                   )
             else:
                 form = form_class()
+                form.parent_object= obj
                 return render(request,
                               self.fsm_transition_form_template,
                               {'transition': transition_name, 'form': form}
