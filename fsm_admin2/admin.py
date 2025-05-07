@@ -55,7 +55,7 @@ class FSMTransitionMixin:
         form_class = _get_transition_form(transition)
         if form_class:
             if request.method == 'POST':
-                form = form_class(request.POST)
+                form = form_class(request.POST, instance=obj)
                 if form.is_valid():
                     transition_method(**form.cleaned_data, request=request)
                     obj.save()
@@ -65,7 +65,7 @@ class FSMTransitionMixin:
                                   {'transition': transition_name, 'form': form}
                                   )
             else:
-                form = form_class()
+                form = form_class(instance=obj)
                 return render(request,
                               self.fsm_transition_form_template,
                               {'transition': transition_name, 'form': form}
