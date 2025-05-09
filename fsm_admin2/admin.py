@@ -108,9 +108,13 @@ def _reverse_object_admin_url(obj):
 
 
 def _get_transition_title(transition):
-    if hasattr(transition.target, 'label'):
+    if transition.custom and "short_description" in transition.custom:
+        return transition.custom["short_description"]
+
+    if hasattr(transition.target, "label"):
         return transition.target.label
-    return transition.custom.get('short_description') or transition.name
+
+    return transition.name
 
 
 def _get_transition_form(transition):
